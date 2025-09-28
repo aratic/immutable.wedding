@@ -6,6 +6,7 @@ import { Header } from '@pages/feeds/components/header/Header';
 import { HighlightSection } from '@pages/feeds/components/highlight/HighlightSection';
 import { InferGetStaticPropsType } from 'next';
 import { getPlaiceholder } from 'plaiceholder';
+import path from 'path';
 
 export async function getStaticProps() {
   const [feedJson, highlightJson] = await Promise.all([
@@ -19,7 +20,13 @@ export async function getStaticProps() {
     feedDataset.map(async feed => {
       const contents = await Promise.all(
         feed.contents.map(async content => {
-          const { base64, img } = await getPlaiceholder(content.imageSrc);
+          const imageSrc = content.imageSrc || '/assets/img/temp.jpg';
+
+          // Log the resolved path
+          console.log('Processing image:', imageSrc);
+          console.log('Resolved path:', path.resolve('./public', imageSrc));
+
+          const { base64, img } = await getPlaiceholder(imageSrc as GetPlaiceholderSrc);
 
           return { ...content, image: { ...img, blurDataURL: base64 } };
         })
@@ -34,15 +41,24 @@ export async function getStaticProps() {
 
   const highlightPromises = Promise.all(
     highlightDatdaset.map(async highlight => {
-      const { base64, img } = await getPlaiceholder(
-        highlight.thumbnailImageSrc,
-        {
-          size: 24,
-        }
-      );
+      const thumbnailImageSrc = highlight.thumbnailImageSrc || '/assets/img/temp.jpg';
+
+      // Log the resolved path
+      console.log('Processing thumbnail image:', thumbnailImageSrc);
+      console.log('Resolved path:', path.resolve('./public', thumbnailImageSrc));
+
+      const { base64, img } = await getPlaiceholder(thumbnailImageSrc as GetPlaiceholderSrc, {
+        size: 24,
+      });
       const contents = await Promise.all(
         highlight.contents.map(async content => {
-          const { base64, img } = await getPlaiceholder(content.imageSrc);
+          const imageSrc = content.imageSrc || '/assets/img/temp.jpg';
+
+          // Log the resolved path
+          console.log('Processing image:', imageSrc);
+          console.log('Resolved path:', path.resolve('./public', imageSrc));
+
+          const { base64, img } = await getPlaiceholder(imageSrc as GetPlaiceholderSrc);
 
           return { ...content, image: { ...img, blurDataURL: base64 } };
         })

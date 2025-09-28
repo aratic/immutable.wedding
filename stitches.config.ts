@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { createCss, StitchesCss } from '@stitches/react';
+import { createStitches } from '@stitches/react';
 
-const stitches = createCss({
+const stitches = createStitches({
   theme: {
     colors: {
       black: '#000',
@@ -516,7 +516,7 @@ const stitches = createCss({
 export type CSSType = StitchesCss<typeof stitches>;
 export type Color = CSSType['color'];
 
-export const { styled, css, theme, getCssString, global, keyframes, config } =
+export const { styled, css, theme, getCssText, global, keyframes, config } =
   stitches;
 
 export type HexColorKey = keyof typeof theme.colors;
