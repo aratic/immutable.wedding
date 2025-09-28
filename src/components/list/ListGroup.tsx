@@ -20,7 +20,7 @@ export function ListGroup({
       elementType="section"
       direction="column"
       css={mergeCss({ spaceY }, css)}
-      {...(props as any)}
+      {...props}
     >
       {typeof title === 'string' ? (
         <ListGroupTitle>{title}</ListGroupTitle>

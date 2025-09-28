@@ -7,10 +7,12 @@ export function useComments(id: number) {
     suspense: true,
   });
 
+  const comments = data ?? [];
+
   return {
-    data: data!,
-    isEmpty: data!.length === 0,
-    hasOnlyOne: data!.length - 1 === 0,
+    data: comments,
+    isEmpty: comments.length === 0,
+    hasOnlyOne: comments.length === 1,
     ...rest,
   };
 }

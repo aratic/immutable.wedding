@@ -40,7 +40,7 @@ export function EmojiProfile({ id, css, ...props }: Props) {
   const { emoji, color } = animalEmojiSets[randomIndex];
 
   return (
-    <Circle css={mergeCss({ backgroundColor: color }, css)} {...(props as any)}>
+    <Circle css={mergeCss({ backgroundColor: color }, css)} {...props}>
       <Emoji>{emoji}</Emoji>
     </Circle>
   );

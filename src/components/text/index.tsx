@@ -119,7 +119,7 @@ const Text = ({
       weight={weight}
       align={align}
       variant={variant}
-      {...(props as any)}
+      {...props}
     />
   );
 };

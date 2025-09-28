@@ -35,7 +35,7 @@ function _LikeIcon({ onClick, ...props }: Props, ref: Ref<HTMLButtonElement>) {
   }, [showNotification]);
 
   useEffect(() => {
-    let timeoutId: any;
+    let timeoutId: NodeJS.Timeout;
     if (like) {
       timeoutId = setTimeout(setLikeToFalse, 1550);
       openToast();

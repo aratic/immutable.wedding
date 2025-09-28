@@ -123,10 +123,10 @@ export function Button<E extends ElementKeyType>({
   return (
     <SButton
       size={compact ? `compact-${size}` : size}
-      radius={radius}
-      type={type as any}
+      radius={radius} // type is already handled by JSX.IntrinsicElements[ElementType]
+      type={type}
       bgStyle={variant}
-      {...(props as any)}
+      {...props}
     >
       {children}
     </SButton>

@@ -19,8 +19,7 @@ export type DoubleTapResult<Target, Callback> =
         onClick: CallbackFunction<Target>;
       }
     : Callback extends null
-    ? // eslint-disable-next-line @typescript-eslint/ban-types
-      {}
+    ? Record<string, never>
     : never;
 
 export function useDoubleTap<
@@ -28,7 +27,7 @@ export function useDoubleTap<
   Callback extends DoubleTapCallback<Target> = DoubleTapCallback<Target>
 >(
   callback: Callback,
-  threshold = 300,
+  threshold = 300, // Insert `,`
   options: DoubleTapOptions<Target> = {}
 ): DoubleTapResult<Target, Callback> {
   const timer = useRef<NodeJS.Timeout | null>(null);
@@ -45,7 +44,7 @@ export function useDoubleTap<
       } else {
         clearTimeout(timer.current);
         timer.current = null;
-        callback && callback(event);
+        void (callback && callback(event));
       }
     },
     [threshold, options, callback]

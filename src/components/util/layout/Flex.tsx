@@ -106,7 +106,7 @@ export const Flex = <E extends keyof JSX.IntrinsicElements>({
       justify: 'start',
       wrap: 'noWrap',
     },
-  }) as any;
+  });
   return (
     <SFlex align={align} direction={direction} justify={justify} {...props} />
   );

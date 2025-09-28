@@ -26,9 +26,9 @@ export function FeedActionCTA({ action }: Props) {
         as="a"
         backgroundColor={action.color}
         href={
-          isMobileWeb
-            ? action.mobileLink ?? action.href
-            : action.pcLink ?? action.href
+          isMobileWeb // Replace `action.mobileLink ?? action.href` with `(action.mobileLink ?? action.href)`
+            ? (action.mobileLink ?? action.href)
+            : (action.pcLink ?? action.href)
         }
         target="_blank"
         rel="noopener noreferrer"

@@ -11,7 +11,7 @@ export function SmallGrayButton(
       type="button"
       size="xs"
       compact={true}
-      {...(props as any)}
+      {...props}
     />
   );
 }

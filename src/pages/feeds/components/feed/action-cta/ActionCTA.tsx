@@ -16,9 +16,9 @@ export function ActionCTA<ElementType extends keyof JSX.IntrinsicElements>({
   backgroundColor,
   children,
   css,
-  ...props
+  ...props // Unexpected any. Specify a different type.
 }: Props<ElementType>) {
-  const Component = styled(as ?? 'div', {}) as any;
+  const Component = styled(as ?? 'div', {});
 
   return (
     <Component

@@ -1,7 +1,7 @@
 import { NotificationProvider } from '@components/notification/NotificationContext';
 import { DialogProvider } from '@hooks/useDialog';
 import { PortalProvider } from '@providers/PortalProvider';
-import { AnimateSharedLayout } from 'framer-motion';
+import { LayoutGroup } from 'framer-motion';
 import { NextSeo } from 'next-seo';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -16,7 +16,7 @@ const Main = styled('main', {
   position: 'relative',
   maxWidth: 520,
   minWidth: 320,
-  mx: 'auto',
+  // mx: 'auto',
   backgroundColor: '$white',
 });
 
@@ -78,11 +78,11 @@ function MyApp({ Component, pageProps }: AppProps) {
       <NotificationProvider>
         <PortalProvider>
           <DialogProvider>
-            <AnimateSharedLayout type="crossfade">
+            <LayoutGroup>
               <Main>
                 <Component {...pageProps} />
               </Main>
-            </AnimateSharedLayout>
+            </LayoutGroup>
           </DialogProvider>
         </PortalProvider>
       </NotificationProvider>

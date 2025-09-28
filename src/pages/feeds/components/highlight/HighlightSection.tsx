@@ -39,20 +39,17 @@ export function HighlightSection({ highlights }: Props) {
       {highlights.map(({ id, ...highlight }, index) => {
         return (
           <Link
-            key={id}
-            href={{
-              pathname: `/highlights/[id]`,
-              query: { id },
-            }}
-            passHref={true}
-            shallow={true}
+            key={`${id}-${index}`}
+            href={{ pathname: `/highlights/[id]`, query: { id } }}
+            passHref
+            shallow
+            legacyBehavior
           >
-            <StyledMotionLi
+            <StyledMotionAnchor
               initial={{ opacity: 0, y: index + 5, x: index + 15 }}
               animate={highlightItemControl}
               custom={index / 18.2}
             >
-              <StyledAnchor>
                 <AnimatePresence>
                   <Image.Root className={highlightImageLayout()}>
                     <SImage
@@ -81,8 +78,7 @@ export function HighlightSection({ highlights }: Props) {
                 >
                   {highlight.name}
                 </HighlightName>
-              </StyledAnchor>
-            </StyledMotionLi>
+            </StyledMotionAnchor>
           </Link>
         );
       })}
@@ -96,17 +92,12 @@ const HighlightName = styled('span', {
 
 const highlightImageLayout = css({ position: 'relative' });
 
-const StyledMotionLi = styled(motion.li, {
-  flex: 'center',
-  flexGrow: 0,
-  flexShrink: 0,
-});
-
-const StyledAnchor = styled('a', {
+const StyledMotionAnchor = styled(motion.a, {
   flex: 'center',
   flexDirection: 'column',
   flexGrow: 0,
   flexShrink: 0,
+  listStyle: 'none',
 });
 
 const StyledDiv = styled('div', {

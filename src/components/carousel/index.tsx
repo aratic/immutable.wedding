@@ -40,7 +40,7 @@ const Carousel = forwardRef(function Carousel(
     pageInfo,
     ...props
   }: Props,
-  ref: Ref<SliderRef | null>
+  ref: Ref<SliderRef | null>,
 ) {
   const { slider, sliderRef, size, index, setIndex } = useCarousel({
     defaultIndex,
@@ -50,17 +50,17 @@ const Carousel = forwardRef(function Carousel(
 
   useImperativeHandle(
     ref,
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     () => {
       return {
         slider() {
-          return slider;
+          return slider.current;
         },
         moveTo(index: number) {
           setIndex(index);
         },
       };
-    },
-    []
+    }, [setIndex, slider]
   );
 
   return (

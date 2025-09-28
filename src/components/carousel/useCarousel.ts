@@ -15,7 +15,7 @@ export function useCarousel(options?: Options) {
       setIndex(s.details().relativeSlide);
     },
   });
-  const size = slider?.details().size ?? 0;
+  const size = slider.current?.details().size ?? 0;
 
   return {
     index,

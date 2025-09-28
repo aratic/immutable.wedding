@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.28.4",
+    "@next/eslint-plugin-next": "^15.5.4",
     "@types/classnames": "^2.3.4",
     "@types/react": "19.1.14",
     "@types/react-dom": "^19.1.9",

@@ -22,16 +22,12 @@ export async function getStaticProps() {
         feed.contents.map(async content => {
           const imageSrc = content.imageSrc || '/assets/img/temp.jpg';
 
-          // Log the resolved path
-          console.log('Processing image:', imageSrc);
-          console.log('Resolved path:', path.resolve('./public', imageSrc));
 
-          const { base64, img } = await getPlaiceholder(imageSrc as GetPlaiceholderSrc);
+          const { base64, metadata } = await getPlaiceholder(path.join('./public', imageSrc));
 
-          return { ...content, image: { ...img, blurDataURL: base64 } };
+          return { ...content, image: { ...metadata, src: imageSrc, blurDataURL: base64 } };
         })
       );
-
       return {
         ...feed,
         contents,
@@ -43,30 +39,32 @@ export async function getStaticProps() {
     highlightDatdaset.map(async highlight => {
       const thumbnailImageSrc = highlight.thumbnailImageSrc || '/assets/img/temp.jpg';
 
-      // Log the resolved path
-      console.log('Processing thumbnail image:', thumbnailImageSrc);
-      console.log('Resolved path:', path.resolve('./public', thumbnailImageSrc));
 
-      const { base64, img } = await getPlaiceholder(thumbnailImageSrc as GetPlaiceholderSrc, {
-        size: 24,
-      });
+      const { base64, metadata: thumbnailMetadata } = await getPlaiceholder(
+        path.join('./public', thumbnailImageSrc),
+        { size: 24 }
+      );
       const contents = await Promise.all(
         highlight.contents.map(async content => {
           const imageSrc = content.imageSrc || '/assets/img/temp.jpg';
 
-          // Log the resolved path
-          console.log('Processing image:', imageSrc);
-          console.log('Resolved path:', path.resolve('./public', imageSrc));
 
-          const { base64, img } = await getPlaiceholder(imageSrc as GetPlaiceholderSrc);
+          const { base64, metadata } = await getPlaiceholder(path.join('./public', imageSrc));
 
-          return { ...content, image: { ...img, blurDataURL: base64 } };
+          return {
+            ...content,
+            image: { ...metadata, src: imageSrc, blurDataURL: base64 },
+          };
         })
       );
 
       return {
         ...highlight,
-        thumbnailImage: { ...img, blurDataURL: base64 },
+        thumbnailImage: {
+          ...thumbnailMetadata,
+          src: thumbnailImageSrc,
+          blurDataURL: base64,
+        },
         contents,
       } as Highlight;
     })

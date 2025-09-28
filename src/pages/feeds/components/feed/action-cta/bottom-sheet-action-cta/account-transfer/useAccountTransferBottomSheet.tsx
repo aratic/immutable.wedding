@@ -51,7 +51,7 @@ function BankAccountListItem({
   onClick,
   ...props
 }: BankInfo['groom'][number] &
-  Omit<ComponentProps<typeof List['Item']>, 'leftAddon' | 'rightAddon'>) {
+  Omit<ComponentProps<(typeof List)['Item']>, 'leftAddon' | 'rightAddon'>) {
   const { showNotification } = useNotifications();
   const openToast = useCallback(() => {
     copyToClipboard(accountNumber);
@@ -77,7 +77,7 @@ function BankAccountListItem({
       leftAddon={<List.Item.Image src={logo} alt={bankName} />}
       rightAddon={<List.Item.ArrowIcon />}
       onClick={handleClick}
-      {...(props as any)}
+      {...props}
     >
       {holderName}
       <List.Item.BottomText>

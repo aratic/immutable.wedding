@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import { useRouter } from 'next/router';
 import { getPlaiceholder } from 'plaiceholder';
+import path from 'path';
 
 import { Header } from '@pages/highlights/components/Header';
 import { useAccount } from '@hooks/data/useAccount';
@@ -35,21 +36,28 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
 
   const highlightDataSet = await Promise.all(
     rawHighlightDataSet.map(async highlightData => {
-      const { base64, img } = await getPlaiceholder(
-        highlightData.thumbnailImageSrc
+      const { base64, metadata } = await getPlaiceholder(
+        path.join('./public', highlightData.thumbnailImageSrc),
       );
 
       const contents = await Promise.all(
         highlightData.contents.map(async content => {
-          const { base64, img } = await getPlaiceholder(content.imageSrc);
+          const { base64, metadata: imageMetadata } = await getPlaiceholder(
+            path.join('./public', content.imageSrc)
+          );
 
-          return { ...content, image: { ...img, blurDataURL: base64 } };
+          return {
+            ...content,
+            image: { ...imageMetadata, src: content.imageSrc, blurDataURL: base64 },
+          };
         })
       );
 
       const highlight: Highlight = {
         ...highlightData,
-        thumbnailImage: { ...img, blurDataURL: base64 },
+        thumbnailImage: {
+          ...metadata, src: highlightData.thumbnailImageSrc, blurDataURL: base64,
+        },
         contents,
       };
 

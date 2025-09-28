@@ -51,7 +51,7 @@ export default function useNotificationsState({ limit }: { limit: number }) {
       update(notifications =>
         notifications.filter(notification => {
           if (notification.id === id) {
-            typeof notification.onClose === 'function' &&
+            if (typeof notification.onClose === 'function')
               notification.onClose(notification);
             return false;
           }
