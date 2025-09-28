@@ -20,9 +20,7 @@ export function Header({
     <header>
       <Flex.CenterVertical css={{ py: '$12', px: '$18' }}>
         <SImageRoot>
-          <Image.RoundShape {...thumbnailImage} width={30} height={30}>
-            <Image.Source src={thumbnailImage.src} alt="프로필_사진" />
-          </Image.RoundShape>
+          <Image.RoundShape {...thumbnailImage} width={30} height={30} alt="Profile Picture" />
         </SImageRoot>
 
         {children}

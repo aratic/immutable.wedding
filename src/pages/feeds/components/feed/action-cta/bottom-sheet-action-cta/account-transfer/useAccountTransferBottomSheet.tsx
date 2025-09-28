@@ -24,12 +24,12 @@ export function useAccountTransferBottomSheet() {
           description={description}
         >
           <List css={{ my: '$16' }}>
-            <List.Group title="신랑측">
+            <List.Group title="Groom's Side">
               {groom.map(bank => (
                 <BankAccountListItem {...bank} onClick={onConfirm} />
               ))}
             </List.Group>
-            <List.Group title="신부측">
+            <List.Group title="Bride's Side">
               {bridge.map(bank => (
                 <BankAccountListItem {...bank} onClick={onConfirm} />
               ))}
@@ -58,8 +58,8 @@ function BankAccountListItem({
     showNotification({
       element: (
         <ToastWrapper>
-          ✅ 계좌번호를 복사했어요.
-          <br /> {bankName} {accountNumber} (예금주:{holderName})
+          ✅ Account number copied.
+          <br /> {bankName} {accountNumber} (Account Holder:{holderName})
         </ToastWrapper>
       ),
     });

@@ -2,8 +2,8 @@ import Image from '@components/image';
 import { Flex } from '@components/util/layout/Flex';
 import { SSRSuspense } from '@components/util/SSRSafeSusepnse';
 import useBooleanState from '@hooks/useBooleanState';
-import { useDoubleTap } from '@hooks/useDoubleTap';
-import { FeedEntity, 액션를_포함하는_피드인가 } from '@models/Feed';
+import { useDoubleTap } from '@hooks/useDoubleTap'; 
+import { FeedEntity, hasAction } from '@models/Feed';
 import { Author } from '@pages/feeds/components/feed/Author';
 import { CommentForm } from '@pages/feeds/components/feed/comment-form/CommentForm';
 import { SmallGrayButton } from '@pages/feeds/components/feed/comments/SmallGrayButton';
@@ -27,27 +27,25 @@ interface Props {
   feeds: FeedEntity[];
 }
 
+const commentsEnabled = process.env.NEXT_PUBLIC_ENABLE_COMMENTS === 'true';
+
 export function Feed({ feeds }: Props) {
   const renderContent = useCallback((contents: FeedEntity['contents']) => {
     return (
       <FeedCarouselWrapper>
-        {contents.map((content, index) => {
-          return (
+        {contents.map((content, index) => (
             <Image.Root key={index}>
               <Image
                 key={index}
                 {...content.image}
                 placeholder="blur"
                 className={css({ transition: 'all 0.2s' })()}
-              >
-                <Image.Source src={content.image.src} alt="feed_사진" />
-              </Image>
-              {액션를_포함하는_피드인가(content) ? (
+                alt="Feed photo" />
+              {hasAction(content) ? (
                 <FeedActionCTA action={content.action} />
               ) : null}
             </Image.Root>
-          );
-        })}
+        ))}
       </FeedCarouselWrapper>
     );
   }, []);
@@ -95,7 +93,7 @@ function FeedItemContainer({
       <div ref={descriptionRef}>
         <DescriptionWrapper>
           <LikeIcon ref={likeIconRef} />
-          <CommentIcon onClick={handleCommentIconClick} />
+          {commentsEnabled && <CommentIcon onClick={handleCommentIconClick} />}
         </DescriptionWrapper>
       </div>
       <div className={css({ px: '$16' })()}>
@@ -103,22 +101,24 @@ function FeedItemContainer({
         <Description>{description}</Description>
         {tags != null ? <Tags values={tags} /> : null}
       </div>
-      <SSRSuspense fallback={null}>
-        <CommentWrapper>
-          {isInputMode ? (
-            <CommentForm id={id} onSubmit={toDisplayMode} />
-          ) : (
-            <Comments
-              id={id}
-              inputModeButton={
-                <SmallGrayButton onClick={handleCommentIconClick}>
-                  댓글 남기기
-                </SmallGrayButton>
-              }
-            />
-          )}
-        </CommentWrapper>
-      </SSRSuspense>
+      {commentsEnabled && (
+        <SSRSuspense fallback={null}>
+          <CommentWrapper>
+            {isInputMode ? (
+              <CommentForm id={id} onSubmit={toDisplayMode} />
+            ) : (
+              <Comments
+                id={id}
+                inputModeButton={
+                  <SmallGrayButton onClick={handleCommentIconClick}>
+                    Leave a comment
+                  </SmallGrayButton>
+                }
+              />
+            )}
+          </CommentWrapper>
+        </SSRSuspense>
+      )}
     </Wrapper>
   );
 }

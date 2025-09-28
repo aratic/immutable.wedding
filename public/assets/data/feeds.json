@@ -4,18 +4,18 @@
       "id": 999,
       "contents": [
         {
-          "imageSrc": "/assets/img/temp.jpg",
+          "imageSrc": "/assets/img/gallery-1.jpg",
           "action": {
             "type": "normal",
-            "text": "단순 메세지 노출",
+            "text": "Simple Message",
             "color": "#7f1d1d"
           }
         },
         {
-          "imageSrc": "/assets/img/temp.jpg",
+          "imageSrc": "/assets/img/gallery-2.jpg",
           "action": {
             "type": "link",
-            "text": "링크 열기 기능 (결혼식장 안내)",
+            "text": "Open Link (Wedding Hall Info)",
             "color": "#d97706",
             "href": "https://m.calendar.naver.com",
             "mobileLink": "https://m.calendar.naver.com",
@@ -23,10 +23,10 @@
           }
         },
         {
-          "imageSrc": "/assets/img/temp.jpg",
+          "imageSrc": "/assets/img/gallery-3.jpg",
           "action": {
             "type": "link",
-            "text": "링크 열기 기능",
+            "text": "Open Link",
             "color": "#3B6045",
             "href": "https://m.map.naver.com/",
             "mobileLink": "https://m.map.naver.com/",
@@ -34,23 +34,29 @@
           }
         },
         {
-          "imageSrc": "/assets/img/temp.jpg",
+          "imageSrc": "/assets/img/gallery-4.jpg",
           "action": {
             "type": "bottom-sheet_toss",
-            "text": "바텀싯 열기 기능 (송금기능)",
+            "text": "Open Bottom Sheet (Remittance)",
             "color": "#3182F6"
           }
         },
         {
-          "imageSrc": "/assets/img/temp.jpg",
+          "imageSrc": "/assets/img/gallery-5.jpg",
           "action": {
             "type": "bottom-sheet_account",
-            "text": "바텀싯 열기 기능 (계좌 목록)",
+            "text": "Open Bottom Sheet (Account List)",
             "color": "#6B31E7"
           }
+        },
+        {
+          "imageSrc": "/assets/img/gallery-6.jpg"
+        },
+        {
+          "imageSrc": "/assets/img/gallery-7.jpg"
         }
       ],
-      "description": "저희 결혼해요! 20xx년 xx월 xx일 토요일 오전 xx시 xx분 서울특별시 강남구 청담동 xx로 xxx, xxxxx",
+      "description": "We are getting married! 20xx-xx-xx Saturday xx:xx AM, Gangnam-gu, Cheongdam-dong xx-ro xxx, xxxxx, Seoul",
       "createdAt": "2018-11-27"
     },
     {
@@ -69,8 +75,8 @@
           "imageSrc": "/assets/img/temp.jpg"
         }
       ],
-      "description": "피드 설명",
-      "tags": ["태그1", "태그2"]
+      "description": "Feed description",
+      "tags": ["Tag1", "Tag2"]
     },
     {
       "id": 5,
@@ -85,8 +91,8 @@
           "imageSrc": "/assets/img/temp.jpg"
         }
       ],
-      "description": "피드 설명",
-      "tags": ["태그1", "태그2"]
+      "description": "Feed description",
+      "tags": ["Tag1", "Tag2"]
     }
   ]
 }

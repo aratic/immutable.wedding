@@ -1,31 +1,31 @@
 {
-  "title": "저희의 결혼을 축하해주세요 💖",
-  "description": "감사한 마음 잊지 않고 오랫동안 간직할게요.",
+  "title": "Please celebrate our marriage 💖",
+  "description": "We will cherish your kind heart for a long time.",
   "groom": [
     {
-      "holderName": "예금주명",
-      "bankName": "은행이름",
-      "accountNumber": "계좌번호",
+      "holderName": "Holder Name",
+      "bankName": "Bank Name",
+      "accountNumber": "Account Number",
       "logo": "/assets/svg/kb.svg"
     },
     {
-      "holderName": "예금주명",
-      "bankName": "은행이름",
-      "accountNumber": "계좌번호",
+      "holderName": "Holder Name",
+      "bankName": "Bank Name",
+      "accountNumber": "Account Number",
       "logo": "/assets/svg/tossbank.svg"
     }
   ],
   "bridge": [
     {
-      "holderName": "예금주명",
-      "bankName": "은행이름",
-      "accountNumber": "계좌번호",
+      "holderName": "Holder Name",
+      "bankName": "Bank Name",
+      "accountNumber": "Account Number",
       "logo": "/assets/svg/ibk.svg"
     },
     {
-      "holderName": "예금주명",
-      "bankName": "은행이름",
-      "accountNumber": "계좌번호",
+      "holderName": "Holder Name",
+      "bankName": "Bank Name",
+      "accountNumber": "Account Number",
       "logo": "/assets/svg/kakaobank.svg"
     }
   ]

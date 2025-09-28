@@ -8,20 +8,37 @@ import Head from 'next/head';
 import og from 'public/assets/data/og.json';
 import React, { useEffect } from 'react';
 import smoothscroll from 'smoothscroll-polyfill';
-import { styled } from 'stitches.config';
+import { globalCss, styled } from 'stitches.config';
 import { SWRConfig } from 'swr';
 import '../styles/globals.css';
 
+const globalStyles = globalCss({
+  body: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: '$gray100',
+  },
+});
+
 const Main = styled('main', {
   position: 'relative',
+  width: '100%',
   maxWidth: 520,
   minWidth: 320,
-  // mx: 'auto',
+  mx: 'auto',
   backgroundColor: '$white',
+
+  '@desktop': {
+    maxWidth: 935,
+    borderLeft: '1px solid $gray200',
+    borderRight: '1px solid $gray200',
+  },
 });
 
 function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
+    globalStyles();
     smoothscroll.polyfill();
   }, []);
 

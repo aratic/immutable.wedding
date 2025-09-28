@@ -57,7 +57,7 @@ const Carousel = forwardRef(function Carousel(
           return slider.current;
         },
         moveTo(index: number) {
-          setIndex(index);
+          slider.current?.moveToIdx(index);
         },
       };
     }, [setIndex, slider]

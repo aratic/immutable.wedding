@@ -3,12 +3,12 @@ import { useIsMobileWeb } from '@hooks/useIsMobileWeb';
 import { ActionCTA } from '@pages/feeds/components/feed/action-cta/ActionCTA';
 import { AccountTransferActionCTA } from '@pages/feeds/components/feed/action-cta/bottom-sheet-action-cta/account-transfer/AccountTransferActionCTA';
 import { TossTransferActionCTA } from '@pages/feeds/components/feed/action-cta/bottom-sheet-action-cta/toss-transfer/TossTransferActionCTA';
-import React from 'react';
+import React from 'react'; 
 import {
   FeedAction,
-  링크_액션인가,
-  바텀싯_액션인가,
-  팝업_액션인가,
+  isLinkAction,
+  isPopupAction,
+  isBottomSheetAction,
 } from 'src/models/Feed';
 import { ToastWrapper } from './ToastWrapper';
 
@@ -20,7 +20,7 @@ export function FeedActionCTA({ action }: Props) {
   const isMobileWeb = useIsMobileWeb();
   const { showNotification } = useNotifications();
 
-  if (링크_액션인가(action)) {
+  if (isLinkAction(action)) {
     return (
       <ActionCTA
         as="a"
@@ -38,7 +38,7 @@ export function FeedActionCTA({ action }: Props) {
     );
   }
 
-  if (팝업_액션인가(action)) {
+  if (isPopupAction(action)) {
     return (
       <ActionCTA
         as="button"
@@ -56,7 +56,7 @@ export function FeedActionCTA({ action }: Props) {
     );
   }
 
-  if (바텀싯_액션인가(action)) {
+  if (isBottomSheetAction(action)) {
     if (action.type === 'bottom-sheet_toss') {
       return <TossTransferActionCTA action={action} />;
     }

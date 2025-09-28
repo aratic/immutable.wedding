@@ -15,7 +15,7 @@ type ButtonOptions = {
   color: keyof typeof rawColors;
   compact?: boolean;
 
-  /** Button type attribute: type을 포함하지 않은 elementType으로 지정 시 타입오류이기 때문에 별도 선언 */
+  /** Button type attribute: Declared separately because if type is not included in elementType, a type error occurs */
   type?: 'submit' | 'button' | 'reset';
 };
 

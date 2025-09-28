@@ -6,7 +6,7 @@ const gaId = process.env.NEXT_PUBLIC_GA_ID;
 class MyDocument extends Document {
   render() {
     return (
-      <Html lang="ko">
+      <Html lang="en">
         <Head>
           <style
             id="stitches"

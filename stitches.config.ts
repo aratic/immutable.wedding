@@ -345,7 +345,7 @@ const stitches = createStitches({
   },
   media: {
     mobile: '(min-width: 375px)',
-    desktop: '(min-width: 520px)',
+    desktop: '(min-width: 768px)',
   },
   utils: {
     size: () => (value: number) => ({
@@ -516,9 +516,16 @@ const stitches = createStitches({
 export type CSSType = StitchesCss<typeof stitches>;
 export type Color = CSSType['color'];
 
-export const { styled, css, theme, getCssText, global, keyframes, config } =
-  stitches;
+export const {
+  styled,
+  css,
+  theme,
+  getCssText,
+  globalCss,
+  keyframes,
+  config,
+} = stitches;
 
 export type HexColorKey = keyof typeof theme.colors;
 export const rawColors = theme.colors;
-export const 아이콘_컬러 = rawColors.trueGray600;
+export const ICON_COLOR = rawColors.trueGray600;

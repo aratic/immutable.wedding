@@ -38,48 +38,46 @@ export function HighlightSection({ highlights }: Props) {
     >
       {highlights.map(({ id, ...highlight }, index) => {
         return (
-          <Link
+          <StyledMotionLi
             key={`${id}-${index}`}
-            href={{ pathname: `/highlights/[id]`, query: { id } }}
-            passHref
-            shallow
-            legacyBehavior
+            initial={{ opacity: 0, y: index + 5, x: index + 15 }}
+            animate={highlightItemControl}
+            custom={index / 18.2}
           >
-            <StyledMotionAnchor
-              initial={{ opacity: 0, y: index + 5, x: index + 15 }}
-              animate={highlightItemControl}
-              custom={index / 18.2}
-            >
-                <AnimatePresence>
-                  <Image.Root className={highlightImageLayout()}>
-                    <SImage
+            <Link href={{ pathname: `/highlights/[id]`, query: { id } }} shallow>
+              <AnimatePresence>
+                <Image.Root className={highlightImageLayout()}>
+                  <ImageWrapper>
+                    <NextImage
                       {...highlight.thumbnailImage}
                       width={60}
                       height={60}
                       placeholder="blur"
+                      alt={highlight.name}
                     />
-                    <StyledDiv>
-                      <Gradient.Circle
-                        size={72}
-                        rotateAnimation={true}
-                        strokeWidth={2.3}
-                        colorKeys={['deepBlue500', 'lightGreen900']}
-                      />
-                    </StyledDiv>
-                  </Image.Root>
-                </AnimatePresence>
-                <HighlightName
-                  css={{
-                    mt: '$6',
-                    maxWidth: 60,
-                    wordBreak: 'keep-all',
-                    textAlign: 'center',
-                  }}
-                >
-                  {highlight.name}
-                </HighlightName>
-            </StyledMotionAnchor>
-          </Link>
+                  </ImageWrapper>
+                  <StyledDiv>
+                    <Gradient.Circle
+                      size={72}
+                      rotateAnimation={true}
+                      strokeWidth={2.3}
+                      colorKeys={['deepBlue500', 'lightGreen900']}
+                    />
+                  </StyledDiv>
+                </Image.Root>
+              </AnimatePresence>
+              <HighlightName
+                css={{
+                  mt: '$6',
+                  maxWidth: 60,
+                  wordBreak: 'keep-all',
+                  textAlign: 'center',
+                }}
+              >
+                {highlight.name}
+              </HighlightName>
+            </Link>
+          </StyledMotionLi>
         );
       })}
     </Flex>
@@ -92,21 +90,22 @@ const HighlightName = styled('span', {
 
 const highlightImageLayout = css({ position: 'relative' });
 
-const StyledMotionAnchor = styled(motion.a, {
+const StyledMotionLi = styled(motion.li, {
   flex: 'center',
   flexDirection: 'column',
   flexGrow: 0,
   flexShrink: 0,
-  listStyle: 'none',
 });
 
+const ImageWrapper = styled('div', {
+  transition: 'all 0.2s',
+  borderRadius: '$round',
+  overflow: 'hidden', /* This ensures the image corners are clipped by the border-radius */
+  display: 'flex',
+  justifyContent: 'center',
+});
 const StyledDiv = styled('div', {
   position: 'absolute',
   top: -6,
   left: -6,
-});
-
-const SImage = styled(NextImage, {
-  transition: 'all 0.2s',
-  borderRadius: '$round',
 });

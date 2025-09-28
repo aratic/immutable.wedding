@@ -29,7 +29,7 @@ function _LikeIcon({ onClick, ...props }: Props, ref: Ref<HTMLButtonElement>) {
   const openToast = useCallback(() => {
     showNotification({
       element: (
-        <ToastWrapper>💖 저희도 고마워요, 댓글도 남겨주세요!</ToastWrapper>
+        <ToastWrapper>💖 Thank you! Please leave a comment too!</ToastWrapper>
       ),
     });
   }, [showNotification]);

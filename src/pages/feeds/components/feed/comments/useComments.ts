@@ -2,10 +2,16 @@
 import { getComments } from '@remotes/comments';
 import useSWR from 'swr';
 
+const commentsEnabled = process.env.NEXT_PUBLIC_ENABLE_COMMENTS === 'true';
+
 export function useComments(id: number) {
-  const { data, ...rest } = useSWR([id, 'getComments'], getComments, {
-    suspense: true,
-  });
+  const { data, ...rest } = useSWR(
+    commentsEnabled ? [id, 'getComments'] : null,
+    getComments,
+    {
+      suspense: true,
+    }
+  );
 
   const comments = data ?? [];
 

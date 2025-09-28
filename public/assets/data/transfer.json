@@ -1,15 +1,15 @@
 {
-  "title": "저희의 결혼을 축하해주세요 💖",
-  "description": "감사한 마음 잊지 않고 오랫동안 간직할게요.",
+  "title": "Please celebrate our marriage 💖",
+  "description": "We will cherish your kind heart for a long time.",
   "transfer": [
     {
-      "message": "xx에게 송금하기",
-      "link": "https://toss.me/송금으로결혼축하하기",
+      "message": "Send money to xx",
+      "link": "https://toss.me/send-money-for-wedding",
       "logo": "/assets/svg/tossbank.svg"
     },
     {
-      "message": "xx에게 송금하기",
-      "link": "https://toss.me/축하하는마음보내기",
+      "message": "Send money to xx",
+      "link": "https://toss.me/send-congratulatory-money",
       "logo": "/assets/svg/tossbank.svg"
     }
   ]

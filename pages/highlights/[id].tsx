@@ -3,6 +3,7 @@ import { Highlight, RawHighlightData } from '@models/Highlight';
 import { AnimatePresence, motion } from 'framer-motion';
 import { GetStaticPropsContext, InferGetStaticPropsType } from 'next';
 import { useRouter } from 'next/router';
+import fs from 'fs';
 import { getPlaiceholder } from 'plaiceholder';
 import path from 'path';
 
@@ -33,22 +34,32 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }: GetStaticPropsContext) {
   const rawHighlightDataSet = await fetchHighlights();
+  // Read all image files from the directory
+  const imageDir = path.join(process.cwd(), 'public/assets/img');
+  const allImageFiles = fs.readdirSync(imageDir);
+  const imageCandidates = allImageFiles
+    .filter(file => file.toLowerCase().startsWith('ce5a') && file.toLowerCase().endsWith('.jpg'))
+    .map(file => `/assets/img/${file}`);
+
+  // Shuffle the images for randomness
+  imageCandidates.sort(() => Math.random() - 0.5);
+  let imageIdx = 0;
 
   const highlightDataSet = await Promise.all(
     rawHighlightDataSet.map(async highlightData => {
+      const thumbnailImageSrc = imageCandidates[imageIdx++ % imageCandidates.length] || highlightData.thumbnailImageSrc;
       const { base64, metadata } = await getPlaiceholder(
-        path.join('./public', highlightData.thumbnailImageSrc),
+        path.join('./public', thumbnailImageSrc),
       );
 
       const contents = await Promise.all(
         highlightData.contents.map(async content => {
-          const { base64, metadata: imageMetadata } = await getPlaiceholder(
-            path.join('./public', content.imageSrc)
-          );
+          const imageSrcAssigned = imageCandidates[imageIdx++ % imageCandidates.length] || content.imageSrc;
+          const { base64, metadata: imageMetadata } = await getPlaiceholder(path.join('./public', imageSrcAssigned));
 
           return {
             ...content,
-            image: { ...imageMetadata, src: content.imageSrc, blurDataURL: base64 },
+            image: { width: imageMetadata.width, height: imageMetadata.height, src: imageSrcAssigned, blurDataURL: base64 },
           };
         })
       );
@@ -56,7 +67,7 @@ export async function getStaticProps({ params }: GetStaticPropsContext) {
       const highlight: Highlight = {
         ...highlightData,
         thumbnailImage: {
-          ...metadata, src: highlightData.thumbnailImageSrc, blurDataURL: base64,
+          width: metadata.width, height: metadata.height, src: thumbnailImageSrc, blurDataURL: base64,
         },
         contents,
       };
@@ -109,32 +120,32 @@ export default function HighlightPage({ highlight, highlightDataSet }: Props) {
   }, [index, router]);
 
   const dataLength = highlightDataSet?.length ?? 0;
-  const 유효한_범위인가 = index > -1 && index < dataLength;
+  const isIndexInBounds = index > -1 && index < dataLength;
 
-  const 대표_컨텐츠_이미지 = 유효한_범위인가
+  const mainContentImage = isIndexInBounds
     ? highlightDataSet?.[index].contents[0].image
     : null;
 
-  const 이전_컨텐츠_대표_이미지 =
+  const prevContentImage =
     index > 0 ? highlightDataSet?.[index - 1].contents[0].image : null;
-  const 다음_컨텐츠_대표_이미지 =
+  const nextContentImage =
     index < dataLength - 1
       ? highlightDataSet?.[index + 1].contents[0].image
       : null;
 
   const [backgroundContent, setBackgroundContent] =
-    useState(다음_컨텐츠_대표_이미지);
+    useState(nextContentImage);
 
   const setPrevToBackgroundContent = useCallback(() => {
-    setBackgroundContent(이전_컨텐츠_대표_이미지);
-  }, [이전_컨텐츠_대표_이미지]);
+    setBackgroundContent(prevContentImage);
+  }, [prevContentImage]);
 
   const setNextToBackgroundContent = useCallback(() => {
-    setBackgroundContent(다음_컨텐츠_대표_이미지);
-  }, [다음_컨텐츠_대표_이미지]);
+    setBackgroundContent(nextContentImage);
+  }, [nextContentImage]);
 
   return highlight == null ? (
-    <div>잘못된 접근</div>
+    <div>Invalid Access</div>
   ) : (
     <AnimatePresence initial={false}>
       {backgroundContent != null ? (
@@ -161,17 +172,17 @@ export default function HighlightPage({ highlight, highlightDataSet }: Props) {
           >
             <Image.Root>
               <Image {...backgroundContent} width={520} height={520}>
-                <Image.Source src={backgroundContent.src} alt="재여비" />
+                <Image.Source src={backgroundContent.src} alt={highlight.name} />
               </Image>
             </Image.Root>
           </StyledMotionDiv>
         </ContentWrapper>
       ) : null}
 
-      {대표_컨텐츠_이미지 != null ? (
+      {mainContentImage != null ? (
         <ContentWrapper
           key={index}
-          imageContent={대표_컨텐츠_이미지}
+          imageContent={mainContentImage}
           animate={{ scale: 1, y: 0, opacity: 1 }}
           drag="x"
           setPrev={setPrev}
@@ -194,8 +205,8 @@ export default function HighlightPage({ highlight, highlightDataSet }: Props) {
             transition={{ duration: 0.3 }}
           >
             <Image.Root>
-              <Image {...대표_컨텐츠_이미지} width={520} height={520}>
-                <Image.Source src={대표_컨텐츠_이미지.src} alt="재여비" />
+              <Image {...mainContentImage} width={520} height={520}>
+                <Image.Source src={mainContentImage.src} alt={highlight.name} />
               </Image>
             </Image.Root>
           </StyledMotionDiv>

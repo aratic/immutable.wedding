@@ -46,17 +46,15 @@ interface BottomSheetAction extends Action {
 
 export type FeedAction = LinkAction | PopupAction | BottomSheetAction | Action;
 
-export function 링크_액션인가(action: FeedAction): action is LinkAction {
+export function isLinkAction(action: FeedAction): action is LinkAction {
   return action.type === 'link';
 }
 
-export function 팝업_액션인가(action: FeedAction): action is PopupAction {
+export function isPopupAction(action: FeedAction): action is PopupAction {
   return action.type === 'popup';
 }
 
-export function 바텀싯_액션인가(
-  action: FeedAction
-): action is BottomSheetAction {
+export function isBottomSheetAction(action: FeedAction): action is BottomSheetAction {
   return (
     action.type === 'bottom-sheet_toss' ||
     action.type === 'bottom-sheet_account'
@@ -71,9 +69,7 @@ export interface FeedEntity {
   tags: string[];
 }
 
-export function 액션를_포함하는_피드인가(
-  feed: FeedContent
-): feed is LinkFeedContent {
+export function hasAction(feed: FeedContent): feed is LinkFeedContent {
   return feed.action != null;
 }
 

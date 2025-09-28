@@ -1,44 +1,38 @@
-import { CSSProps, mergeCss } from '@utils/styles';
-import { WithRequiredKeys } from '@utils/types';
-import NextImage, { ImageProps } from 'next/image';
-import React, { Children, ReactElement, ReactNode } from 'react';
+import NextImage, { ImageProps as NextImageProps } from 'next/image';
+import React, { ReactElement } from 'react';
 import { styled } from 'stitches.config';
 
-interface Props
-  extends WithRequiredKeys<Omit<ImageProps, 'src' | 'alt'>, 'width' | 'height'>,
-    CSSProps {
-  variants?: ReactNode;
-  children: ReactElement<
-    WithRequiredKeys<React.HTMLProps<HTMLImageElement>, 'src' | 'alt'>
-  >;
-}
-const Image = ({ width, height, variants, children, ...props }: Props) => {
-  const imageSource = Children.only(children);
-  const SImage = styled(NextImage, {
-    width,
-    height,
-  });
-
+const Image = (props: NextImageProps) => {
   return (
-    <>
-      <SImage
-        src={imageSource.props.src}
-        alt={imageSource.props.alt}
-        width={width}
-        height={height}
-        {...props}
-      />
-      {variants}
-    </>
+    <NextImage
+      {...props}
+      layout="fill"
+      objectFit="cover"
+      className="next-image" // Add a class for potential global styling
+    />
   );
 };
 
-Image.Root = styled('div', {});
-Image.Source = ({ src, alt }: { src: string; alt: string }) => {
-  return <img src={src} alt={alt} />;
+Image.Root = styled('div', {
+  position: 'relative',
+  width: '100%',
+  // Default to a square aspect ratio, can be overridden
+  paddingBottom: '100%',
+
+  '& > .next-image': {
+    borderRadius: 'inherit', // Inherit border-radius from the parent
+  },
+});
+
+Image.Source = () => {
+  // This component is no longer needed with the new Image structure
+  return null;
 };
-Image.RoundShape = ({ css, ...props }: Props) => (
-  <Image {...props} css={mergeCss({ borderRadius: '$round' }, css)} />
+
+Image.RoundShape = (props: NextImageProps) => (
+  <Image.Root css={{ borderRadius: '$round', paddingBottom: 0, width: props.width, height: props.height }}>
+    <Image {...props} />
+  </Image.Root>
 );
 
 export default Image;
